@@ -6,8 +6,8 @@
     <title>WearView Academy Intranet</title>
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/user.js"></script>
     <script src="js/site.js"></script>
-</head>
 <body>
     <header>
         <div class="logo">
@@ -15,14 +15,20 @@
             <h1>WearView Academy</h1>
         </div>
         <div class="profile">
-            <a href="login.html"><i class="fa-regular fa-user"></i></a>
+            <a href="login.html"><i id="accountIcon" class="fa-regular fa-user"></i></a>
+            <div id="loggedInUser" class="logged-in-user">
+                <span id="userGreeting"></span>
+                <a href="#" id="logoutLink">Logout</a>
+            </div>
         </div>
     </header>
     <nav>
         <ul>
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="login.html">Report Issue</a></li>
-            <li><a href="login.html">View Jobs</a></li>
+            <li id="homeLink" class="active"><a href="index.html">Home</a></li>
+            <li id="itSupportLink"><a href="itsupport.html">IT Support</a></li>
+            <li id="reportIssueLink"><a href="reportissues.html">Report Issue</a></li>
+            <li id="viewRequestsLink"><a href="viewrequests.html">View Requests</a></li>    
+            <li id="viewJobsLink"><a href="viewjobs.html">View Jobs</a></li>
         </ul>
     </nav>
     <main>
@@ -32,13 +38,13 @@
                 <form id="loginForm">
                     <div class="formMarginSplit">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="on">
                     </div>
                     <div class="formMarginSplit">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="on">
                     </div>
-                    <button type="submit" class="btn-submit" 
+                    <button type="buutton" class="btn-submit" 
                     onclick="initiateLogin(document.getElementById('username').value, 
                     document.getElementById('password').value)">Login</button>
                 </form>
