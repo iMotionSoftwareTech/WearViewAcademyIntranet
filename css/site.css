@@ -22,14 +22,6 @@ header a {
     color: inherit;
     text-decoration: none;
 }
-/* header{
-    background:#fff;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 8%;
-    box-shadow:0 1px 4px rgba(0,0,0,.08);
-} */
 
 .logo{
     display:flex;
@@ -133,8 +125,6 @@ main{
     position: absolute;
     top: 0;
     left: 0;
-    /* right: 0;
-    bottom: 0; */
 }
 
 .hero-overlay{
@@ -238,15 +228,6 @@ footer {
     padding: 60px calc((100% - 1100px) / 2); 
     border-bottom: 1px solid #eef3f9; /* Creates a clean transition above the copyright */    
 }
-
-/* footer{
-    margin-top:60px;
-    background:#fff;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:60px;
-    padding:50px 8%;
-} */
 
 footer h4{
     margin-bottom:15px;
@@ -501,6 +482,118 @@ footer a{
     font-weight: 400;
 }
 
+
+    /* --- REPORT IT ISSUE SECTION --- */
+.issue-section {
+    padding: 40px 0;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.issue-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding: 40px;
+    border: 1px solid #e2e8f0;
+}
+
+.issue-container h2 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.issue-subtitle {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* Form Grid Architecture */
+#reportIssueForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+/* Input, Select, and Textarea styling */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d8dde8;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    background-color: #fff;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Form input placeholder styles */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Custom interactive styling matching corporate blue */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #315efb;
+    box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.12);
+}
+
+/* Submit Button Placement and Design */
+.btn-submit-issue {
+    align-self: flex-start; /* Keeps the button left-aligned precisely like the image */
+    background: #315efb;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-submit-issue:hover {
+    background: #1e3a8a;
+}
+
+/* Larger screen sizes */
 @media (max-width: 1200px) {
     header {
         padding: 20px 5%;
@@ -568,6 +661,10 @@ footer a{
         overflow-x: auto;
         white-space: nowrap; /* Prevents menu wrap issues */
         -webkit-overflow-scrolling: touch;
+    }
+
+    .issue-section {
+        padding: 40px 24px;
     }
 }
 
@@ -681,6 +778,24 @@ footer a{
     
     .support-hours {
         padding-left: 40px; /* Aligns hours text with contact text under icon */
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr; /* Stacks columns cleanly into 1 vertical column */
+        gap: 20px;
+    }
+    
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+    .issue-container {
+        padding: 25px 20px;
+    }
+
+    .btn-submit-issue {
+        width: 100%; /* Stretches across layout for thumb-friendly interaction on phone screens */
+        text-align: center;
     }
 }
 

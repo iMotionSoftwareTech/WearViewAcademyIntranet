@@ -33,7 +33,51 @@
         </ul>
     </nav>
     <main>
-        <!-- Replace with content here -->
+        <section class="issue-section">
+    <div class="issue-container">
+        <h2>Report an IT Issue</h2>
+        <p class="issue-subtitle">Please provide details of the fault so our technicians can assist you.</p>
+        
+        <form id="reportIssueForm">
+            <div class="form-grid">
+                <!-- Row 1 -->
+                <div class="form-group">
+                    <label for="yourName">Your Name</label>
+                    <input type="text" id="yourName" name="yourName" placeholder="e.g. Katy Smith" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailAddress">Email Address</label>
+                    <input type="email" id="emailAddress" name="emailAddress" placeholder="e.g. k.smith@wearview.ac.uk" required>
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="form-group">
+                    <label for="faultLocation">Fault Location (e.g. Room 12, Main Office)</label>
+                    <input type="text" id="faultLocation" name="faultLocation" placeholder="e.g. Room 14, Science Block" required>
+                </div>
+                <div class="form-group">
+                    <label for="faultType">Type of Fault</label>
+                    <select id="faultType" name="faultType" required>
+                        <option value="" disabled selected>Select a fault type</option>
+                        <option value="projector">Projector Fault</option>
+                        <option value="computer">Classroom Computer</option>
+                        <option value="password">Password Reset</option>
+                        <option value="printer">Printer Problem</option>
+                        <option value="wifi">Wi-Fi Issue</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Full Width Row 3 -->
+            <div class="form-group full-width">
+                <label for="issueDescription">Description of Issue</label>
+                <textarea id="issueDescription" name="issueDescription" rows="5" placeholder="Describe the issue in detail..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn-submit-issue">Submit Request</button>
+        </form>
+    </div>
+</section>
     </main>
     <footer>
         <div>

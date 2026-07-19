@@ -7,24 +7,26 @@ function initialise() {
     setupLogout();
     setActiveNavigation();
 
+    // 1. Setup Login form if present
     const loginForm = document.getElementById("loginForm");
-
     if (loginForm) {
-
         loginForm.addEventListener("submit", function (e) {
-
             e.preventDefault();
-
             initiateLogin(
                 document.getElementById("username").value,
                 document.getElementById("password").value
             );
         });
     }
+
+    // 2. Setup Issue form if present (Removed duplicate event bindings)
+    const issueForm = document.getElementById('reportIssueForm');
+    if (issueForm) {
+        issueForm.addEventListener('submit', handleIssueSubmission);
+    }
 }
 
 function initiateLogin(username, password) {
-
     let user = null;
 
     if (username === "" || password === "") {
@@ -33,7 +35,6 @@ function initiateLogin(username, password) {
     }
 
     if (username === "staffmember" && password === "letmein!123") {
-
         user = new User(
             2,
             "Katy",
@@ -41,9 +42,7 @@ function initiateLogin(username, password) {
             "katy.johnson@wearviewacademy.ac.uk",
             "Teacher"
         );
-
     } else if (username === "admin" && password === "heretohelp!456") {
-
         user = new User(
             1,
             "David",
@@ -51,19 +50,12 @@ function initiateLogin(username, password) {
             "david.smith@wearviewacademy.ac.uk",
             "Administrator"
         );
-
     } else {
-
         alert("Invalid username or password.");
         return;
-
     }
 
-    sessionStorage.setItem(
-        "currentUser",
-        JSON.stringify(user)
-    );
-
+    sessionStorage.setItem("currentUser", JSON.stringify(user));
     window.location.href = "index.html";
 }
 
@@ -75,29 +67,24 @@ function verifyUserLogin(){
     const userGreeting = document.getElementById("userGreeting");
 
     if (user) {
-        accountIcon.style.display = "none";
-        loggedInUser.style.display = "flex";
-        userGreeting.textContent = `Hello ${user.firstName} ${user.lastName}`;
+        if (accountIcon) accountIcon.style.display = "none";
+        if (loggedInUser) loggedInUser.style.display = "flex";
+        if (userGreeting) userGreeting.textContent = `Hello ${user.firstName} ${user.lastName}`;
     }
     else {
-        accountIcon.style.display = "inline-block";
-        loggedInUser.style.display = "none";
-        userGreeting.textContent = "";
+        if (accountIcon) accountIcon.style.display = "inline-block";
+        if (loggedInUser) loggedInUser.style.display = "none";
+        if (userGreeting) userGreeting.textContent = "";
     }
 }
 
 function setupLogout() {
     const logoutLink = document.getElementById("logoutLink");
-
-    if (!logoutLink) {
-        return;
-    }
+    if (!logoutLink) return;
 
     logoutLink.onclick = function (e) {
-
         e.preventDefault();
         logout();
-
     };
 }
 
@@ -108,24 +95,25 @@ function updateNavigation() {
     const viewRequests = document.getElementById("viewRequestsLink");
     const viewJobs = document.getElementById("viewJobsLink");
 
-    // Hide everything first
-    reportIssue.style.display = "none";
-    viewRequests.style.display = "none";
-    viewJobs.style.display = "none";
+    // Hide everything safely first (checking elements exist to avoid reference errors)
+    if (reportIssue) reportIssue.style.display = "none";
+    if (viewRequests) viewRequests.style.display = "none";
+    if (viewJobs) viewJobs.style.display = "none";
 
-    if (!user) {
+    // FIXED: Safely exit early if no user session is active before checking .role
+    if (!user || !user.role) {
         return;
     }
 
     switch (user.role) {
         case "Administrator":
-            reportIssue.style.display = "block";
-            viewJobs.style.display = "block";
+            if (reportIssue) reportIssue.style.display = "block";
+            if (viewJobs) viewJobs.style.display = "block";
             break;
 
         case "Teacher":
-            reportIssue.style.display = "block";
-            viewRequests.style.display = "block";
+            if (reportIssue) reportIssue.style.display = "block";
+            if (viewRequests) viewRequests.style.display = "block";
             break;
     }
 }
@@ -138,6 +126,8 @@ function logout(){
 function setupITSupportLink() {
     const user = JSON.parse(sessionStorage.getItem("currentUser"));
     const link = document.querySelector("#itSupportLink a");
+
+    if (!link) return;
 
     if (user) {
         link.href = "itsupport.html";
@@ -158,4 +148,60 @@ function setActiveNavigation() {
             link.parentElement.classList.add("active");
         }
     });
+}
+
+function validateIssueForm() {
+    const name = document.getElementById('yourName').value.trim();
+    const email = document.getElementById('emailAddress').value.trim();
+    const location = document.getElementById('faultLocation').value.trim();
+    const faultType = document.getElementById('faultType').value;
+    const description = document.getElementById('issueDescription').value.trim();
+
+    if (!name || !email || !location || !faultType || !description) {
+        alert("Please complete all fields before submitting.");
+        return false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    if (description.length < 15) {
+        alert("Please provide a more detailed description (at least 15 characters).");
+        return false;
+    }
+
+    return true; 
+}
+
+function handleIssueSubmission(event) {
+    event.preventDefault();
+
+    if (!validateIssueForm()) {
+        return; 
+    }
+
+    const formData = {
+        name: document.getElementById('yourName').value.trim(),
+        email: document.getElementById('emailAddress').value.trim(),
+        location: document.getElementById('faultLocation').value.trim(),
+        faultType: document.getElementById('faultType').value,
+        description: document.getElementById('issueDescription').value.trim(),
+        timestamp: new Date().toISOString()
+    };
+
+    try {
+        let localIssuesList = JSON.parse(sessionStorage.getItem('reportedITIssues')) || [];
+        localIssuesList.push(formData);
+        sessionStorage.setItem('reportedITIssues', JSON.stringify(localIssuesList));
+
+        alert('Thank you! Your IT Support ticket has been successfully validated and saved.');
+        
+        document.getElementById('reportIssueForm').reset();
+    } catch (storageError) {
+        console.error('Critical session storage system fault context:', storageError);
+        alert('An error occurred while saving your data. Please try again.');
+    }
 }
