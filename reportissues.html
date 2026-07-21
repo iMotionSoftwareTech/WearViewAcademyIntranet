@@ -64,11 +64,16 @@
                         <option value="password">Password Reset</option>
                         <option value="printer">Printer Problem</option>
                         <option value="wifi">Wi-Fi Issue</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
             </div>
 
             <!-- Full Width Row 3 -->
+             <div class="form-group">
+                    <label for="issueTitle">Title of Issue</label>
+                    <input type="text" id="issueTitle" name="issueTitle" placeholder="e.g. Locked Account" required>
+                </div>
             <div class="form-group full-width">
                 <label for="issueDescription">Description of Issue</label>
                 <textarea id="issueDescription" name="issueDescription" rows="5" placeholder="Describe the issue in detail..." required></textarea>

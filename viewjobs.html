@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/user.js"></script>
     <script src="js/site.js"></script>
+    <!-- <script src="js/jobsdashboard.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () { 
+            verifyUserLogin();
+            setupITSupportLink();
+            setActiveNavigation();
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -32,8 +40,49 @@
             <li id="viewJobsLink"><a href="viewjobs.html">View Jobs</a></li>
         </ul>
     </nav>
-    <main>
-        <!-- Replace with content here -->
+     <main>
+        <section class="jobs-section">
+            <div class="page-header">
+                <h2>View Jobs</h2>
+                <p>Manage IT support jobs reported by staff.</p>
+            </div>
+            <div class="jobs-toolbar">
+                <div class="toolbar-left">
+                    <input
+                        type="text"
+                        id="jobSearch"
+                        class="search-input"
+                        placeholder="Search jobs...">
+                </div>
+                <div class="toolbar-right">
+                    <label>Items per page</label>
+                    <select id="jobsPerPage">
+                        <option>5</option>
+                        <option selected>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                    </select>
+                </div>
+            </div>
+            <div class="job-tabs">
+                <button
+                    id="incompleteTab"
+                    class="active btn"
+                    onclick="showIncomplete()"
+                    type="button">
+                    Incomplete Jobs
+                </button>
+                <button
+                    id="completedTab"
+                    class="btn"
+                    onclick="showCompleted()"
+                    type="button">
+                    Completed Jobs
+                </button>
+            </div>
+            <div id="jobsContainer" class="jobs-grid"></div>
+            <div id="jobsPagination" class="pagination"></div>
+        </section>
     </main>
     <footer>
         <div>

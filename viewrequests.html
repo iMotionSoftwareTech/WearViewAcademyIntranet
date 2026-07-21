@@ -33,7 +33,36 @@
         </ul>
     </nav>
     <main>
-        <!-- Replace with content here -->
+        <section class="requests-section">
+            <h2>Support Requests</h2>
+            
+            <!-- Filter Control Panel Bar -->
+            <div class="requests-filter-bar">
+                <input type="text" id="searchBar" placeholder="Search by description or user...">
+
+                <select id="itemsPerPageSelect">
+                    <option value="3" selected>Show 3</option>
+                    <option value="5">Show 5</option>
+                    <option value="10">Show 10</option>
+                </select>
+                
+                <select id="statusFilter">
+                    <option value="All">All Statuses</option>
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+            <!-- This dynamic element will be populated by JavaScript -->
+            <div id="requestsContainer" class="requests-list"></div>
+            
+            <!-- Clean, balanced pagination block -->
+            <div class="pagination-container">
+                <button id="prevPageBtn" class="btn-page"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+                <span id="pageIndicator" class="page-info">Page 1 of 1</span>
+                <button id="nextPageBtn" class="btn-page">Next <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </section>
     </main>
     <footer>
         <div>
